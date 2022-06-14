@@ -1,6 +1,7 @@
 import 'package:balance_friends/home_screen.dart';
 import 'package:flutter/material.dart';
 
+import 'chat_public_screen.dart';
 import 'widget/touch_reaction_widget.dart';
 
 void main() {
@@ -14,6 +15,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+        '/home' : (context)=>
+            HomeScreen(),
+        'chat/public' : (context)=>
+            ChatPublic(),
+      },
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -54,11 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 30,
               child: TouchReaction(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context)=>
-                          HomeScreen()),
-                    );
+                    Navigator.pushNamed(context, '/home');
                   }, child: Center(child: Text('접속하기'))),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
