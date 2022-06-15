@@ -8,9 +8,9 @@ class HomeScreen extends StatefulWidget{
 }
 class _HomeScreen extends State<HomeScreen>
 {
+  String name = '사용자';
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         title: Text("홈화면"),
@@ -27,11 +27,12 @@ class _HomeScreen extends State<HomeScreen>
                   height: 40,
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all()
+                      border: Border.all(),
                   ),
+                  child: Image.network('https://swingbrowser.userecho.com/s/cache/b5/09/b5098d61f3ef34b35311456b08123897.png'),
                 ),
                 SizedBox(width: 20,),
-                Expanded(child: Text('사용자 님')),
+                Expanded(child: Text('$name 님')),
               ],
             ),
           ),
