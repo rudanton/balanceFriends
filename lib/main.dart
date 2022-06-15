@@ -16,7 +16,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        /// TODO 설정한 닉네임 전달해서 화면 이동하기.
         '/home' : (context)=>
             HomeScreen(),
         'chat/public' : (context)=>

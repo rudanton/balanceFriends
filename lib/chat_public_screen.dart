@@ -1,5 +1,8 @@
 import 'package:balance_friends/models/profile.dart';
+import 'package:balance_friends/widget/buton_action_bottom_sheet.dart';
+import 'package:balance_friends/widget/chat_widget.dart';
 import 'package:balance_friends/widget/text_feild.dart';
+import 'package:balance_friends/widget/touch_reaction_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +23,6 @@ class _ChatPublic extends State<ChatPublic> {
   late TextEditingController chatController;
   List<Widget> chatLog = [];
   late Profile profile;
-
   List<Profile> prList = [];
   late final args;
 
@@ -42,7 +44,6 @@ class _ChatPublic extends State<ChatPublic> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         title: Text("공개 채팅방"),
@@ -62,9 +63,10 @@ class _ChatPublic extends State<ChatPublic> {
                       children: chatLog,
                     ),
                   )),
-                  flex: 4,
+                  flex: 3,
                   fit: FlexFit.tight,
                 ),
+                VerticalDivider(color: Colors.indigoAccent,),
                 Flexible(
                   child: SingleChildScrollView(
                       child: Column(
@@ -103,32 +105,50 @@ class _ChatPublic extends State<ChatPublic> {
     );
   }
 
-  void OnSubmit(String text) {
-    chatLog.add(buildChatLog(profile, text));
+  void OnSubmit(String chat) {
+    chatLog.add(ChatLog(chat: chat, profile: profile,));
     chatController.text = "";
     setState(() {});
   }
-  Widget buildChatLog(Profile pr, String chat){
-    return Padding(
-      padding: EdgeInsets.all(5),
-      child: Row(
-        children: [
-          Image.network(pr.imgUrl, width: 30, height: 30,),
-          Expanded(child: Text('${pr.name} : $chat'))
-        ],
-      ),
-    );
-  }
+  
+
   Widget buildProfile(Profile pr) {
-    return Row(
-      children: [
-        Image.network(
-          profile.imgUrl,
-          width: 20,
-          height: 20,
+    return TouchReaction(
+      onTap: (){
+        if(pr == profile){
+          print('same');
+        }
+        else {
+          showModalBottomSheet(context: context, builder: (_context){
+            return ButtonActionBottomSheet(title: '개인 채팅',
+                deniedText: '예', acceptText: '아니오',
+                onTapDeniedButton: (){},
+                onTapAcceptButton: (){},
+                contents: Text('개인 채팅으로 이동하겠습니까?'));
+          });
+          /// TODO 팝업 띄우고,
+          /// 다른 화면으로 넘어갑니다. 1:1 채팅.
+        };
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all()
         ),
-        Text(profile.name),
-      ],
+        child: Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: Row(
+            children: [
+              Image.network(
+                profile.imgUrl,
+                width: 20,
+                height: 20,
+              ),
+              Flexible(child: Text(profile.name,
+                maxLines: 1, overflow: TextOverflow.ellipsis,)),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

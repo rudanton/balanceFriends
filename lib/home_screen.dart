@@ -52,7 +52,6 @@ class _HomeScreen extends State<HomeScreen>
           if(isEdit)CustomTextField(textEditingController: nameEditor),
           ElevatedButton(onPressed: (){
             setState(() {
-
             });
             if(!isEdit){
                   isEdit = true;
