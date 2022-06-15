@@ -40,7 +40,8 @@ class _HomeScreen extends State<HomeScreen>
           Padding(
             padding: const EdgeInsets.all(25.0),
             child: ElevatedButton(onPressed: (){
-              Navigator.pushNamed(context, 'chat/public');
+              Navigator.pushNamed(context, 'chat/public',
+              arguments: ChatPublicArgument(name: name));
             }, child: Container(
               child: Text('채팅방 입장.'),
             )),

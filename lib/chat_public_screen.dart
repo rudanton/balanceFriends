@@ -2,7 +2,13 @@ import 'package:balance_friends/widget/text_feild.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+class ChatPublicArgument{
+  final String name;
+  ChatPublicArgument({required this.name});
+}
 class ChatPublic extends StatefulWidget {
+  const ChatPublic({
+    Key? key}) : super(key: key);
   @override
   _ChatPublic createState() => _ChatPublic();
 }
@@ -10,13 +16,19 @@ class ChatPublic extends StatefulWidget {
 class _ChatPublic extends State<ChatPublic> {
   late TextEditingController chatController;
   List<String> chatLog = [""];
-
+  late String name ;
+  late final args;
   @override
   void initState() {
     chatController = TextEditingController();
+
     super.initState();
   }
-
+void didChangeDependencies(){
+  args = ModalRoute.of(context)!.settings.arguments as ChatPublicArgument;
+  name = args.name;
+    super.didChangeDependencies();
+}
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -47,7 +59,7 @@ class _ChatPublic extends State<ChatPublic> {
                   child: SingleChildScrollView(
                       child: Column(
                     children: [
-                      Text('사용자.'),
+                      Text(name),
                     ],
                   )),
                   flex: 1,
@@ -85,7 +97,8 @@ class _ChatPublic extends State<ChatPublic> {
   }
 
   void OnSubmit(String text) {
-    chatLog.add(text);
+
+    chatLog.add('$name : $text');
     chatController.text = "";
     setState(() {});
   }
