@@ -1,4 +1,5 @@
 import 'package:balance_friends/chat_public_screen.dart';
+import 'package:balance_friends/widget/text_feild.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,10 +11,13 @@ class HomeScreen extends StatefulWidget{
 }
 class _HomeScreen extends State<HomeScreen>
 {
+  bool isEdit = false;
   late Profile profile;
+  late TextEditingController nameEditor;
   @override
   void initState(){
     profile = Profile(name: '사용자');
+    nameEditor = TextEditingController(text: profile.name);
   }
   @override
   Widget build(BuildContext context) {
@@ -45,6 +49,19 @@ class _HomeScreen extends State<HomeScreen>
               ],
             ),
           ),
+          if(isEdit)CustomTextField(textEditingController: nameEditor),
+          ElevatedButton(onPressed: (){
+            setState(() {
+
+            });
+            if(!isEdit){
+                  isEdit = true;
+                }
+            else {
+              isEdit = false;
+              profile.name = nameEditor.text;
+            }
+              }, child: Text('프로필 수정')),
           Expanded(child: Container()),
           Padding(
             padding: const EdgeInsets.all(25.0),
