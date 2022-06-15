@@ -2,13 +2,19 @@ import 'package:balance_friends/chat_public_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'models/profile.dart';
+
 class HomeScreen extends StatefulWidget{
   @override
   _HomeScreen createState() => _HomeScreen();
 }
 class _HomeScreen extends State<HomeScreen>
 {
-  String name = '사용자';
+  late Profile profile;
+  @override
+  void initState(){
+    profile = Profile(name: '사용자');
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,10 +35,13 @@ class _HomeScreen extends State<HomeScreen>
                       shape: BoxShape.circle,
                       border: Border.all(),
                   ),
-                  child: Image.network('https://swingbrowser.userecho.com/s/cache/b5/09/b5098d61f3ef34b35311456b08123897.png'),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                      child: Image.network(profile.imgUrl,
+                      width: 40, height: 80,)),
                 ),
                 SizedBox(width: 20,),
-                Expanded(child: Text('$name 님')),
+                Expanded(child: Text('${profile.name} 님')),
               ],
             ),
           ),
@@ -41,7 +50,7 @@ class _HomeScreen extends State<HomeScreen>
             padding: const EdgeInsets.all(25.0),
             child: ElevatedButton(onPressed: (){
               Navigator.pushNamed(context, 'chat/public',
-              arguments: ChatPublicArgument(name: name));
+              arguments: ChatPublicArgument(profile: profile));
             }, child: Container(
               child: Text('채팅방 입장.'),
             )),
